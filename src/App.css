@@ -1097,7 +1097,7 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   grid-template-columns: repeat(8, 1fr);
 }
 
-/* ===== MOBILE - PHONE LAYOUT ===== */
+/* ===== MOBILE FINAL CLEAN UI ===== */
 
 @media (max-width: 850px) {
   html,
@@ -1119,32 +1119,27 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     width: 100%;
     min-height: 100svh;
     padding: 6px;
-    display: flex;
-    justify-content: center;
     align-items: flex-start;
+    justify-content: center;
   }
 
   .table {
     width: 100%;
     max-width: 430px;
-    height: 790px;
-    min-height: 790px;
+    height: 760px;
+    min-height: 760px;
     margin: 0 auto;
-    border-radius: 24px;
+    border-radius: 22px;
     overflow: hidden;
-  }
-
-  .historyPanel {
-    display: none;
   }
 
   .table::before {
     left: 50%;
-    top: 6%;
+    top: 7%;
     transform: translateX(-50%);
-    width: 92%;
-    height: 43%;
-    border-width: 8px;
+    width: 88%;
+    height: 39%;
+    border-width: 7px;
     outline-width: 3px;
   }
 
@@ -1152,20 +1147,21 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     left: 50%;
     top: 18%;
     transform: translateX(-50%);
-    width: 64%;
-    height: 22%;
+    width: 60%;
+    height: 19%;
   }
 
   .centerTable {
     left: 50%;
-    top: 30%;
-    width: 250px;
-    min-height: 130px;
+    top: 28%;
+    width: 230px;
+    min-height: 120px;
     padding: 4px;
+    overflow: hidden;
   }
 
   .centerTable h3 {
-    font-size: 31px;
+    font-size: 28px;
     margin-bottom: 4px;
   }
 
@@ -1175,77 +1171,74 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .centerTable p {
-    font-size: 15px;
+    font-size: 14px;
     margin: 3px 0;
-    line-height: 1.2;
+    line-height: 1.15;
+    white-space: nowrap;
   }
 
   .centerTable div::after {
-    margin-top: 8px;
-    font-size: 18px;
+    margin-top: 7px;
+    font-size: 17px;
     letter-spacing: 8px;
   }
 
   .roundResult {
-    font-size: 17px !important;
-    line-height: 1.15;
+    font-size: 15px !important;
+    white-space: normal !important;
+    line-height: 1.15 !important;
   }
 
   .bot {
-    width: 82px;
-    height: 100px;
-    border-radius: 18px;
-    padding: 5px;
-    gap: 3px;
+    width: 74px;
+    height: 88px;
+    border-radius: 16px;
+    padding: 4px;
+    gap: 2px;
   }
 
   .bot::before {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .botName {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.05;
   }
 
   .botName span {
-    font-size: 9px;
+    font-size: 8px;
   }
 
   .backCard {
-    min-width: 50px;
-    padding: 4px 6px;
-    font-size: 16px;
-  }
-
-  .bot .cardsStack {
-    min-height: 58px;
+    min-width: 46px;
+    padding: 3px 5px;
+    font-size: 15px;
   }
 
   .bot .gameCard {
-    width: 42px;
-    height: 58px;
-    font-size: 15px;
+    width: 36px;
+    height: 50px;
+    font-size: 13px;
     border-width: 2px;
-    border-radius: 9px;
     margin-left: -10px;
   }
 
   .top {
     left: 50%;
-    top: 3.5%;
+    top: 4%;
     transform: translateX(-50%);
   }
 
   .left {
-    left: 4%;
+    left: 5%;
     top: 28%;
     transform: translateY(-50%);
   }
 
   .right {
     left: auto;
-    right: 4%;
+    right: 5%;
     top: 28%;
     transform: translateY(-50%);
   }
@@ -1267,29 +1260,29 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .you::before {
-    font-size: 23px;
+    font-size: 22px;
     margin-bottom: 0;
   }
 
   .you p {
-    font-size: 15px;
+    font-size: 14px;
     margin: 1px 0;
   }
 
   .playerCards {
-    min-height: 78px;
-    margin: 4px auto 8px;
+    min-height: 70px;
+    margin: 3px auto 7px;
   }
 
   .cardsStack {
-    min-height: 72px;
+    min-height: 64px;
   }
 
   .you .gameCard {
-    width: 58px;
-    height: 82px;
-    font-size: 30px;
-    border-radius: 12px;
+    width: 52px;
+    height: 74px;
+    font-size: 27px;
+    border-radius: 11px;
     border-width: 3px;
   }
 
@@ -1300,10 +1293,10 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .buttons button {
-    min-height: 42px;
-    padding: 8px 10px;
-    font-size: 14px;
-    border-radius: 13px;
+    min-height: 38px;
+    padding: 7px 9px;
+    font-size: 13px;
+    border-radius: 12px;
   }
 
   .endTurn {
@@ -1316,32 +1309,62 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .bottomMenuButtons {
-    left: 12px;
-    top: 10px;
+    left: 10px;
+    top: 8px;
     bottom: auto;
-    width: 112px;
+    width: 98px;
     gap: 6px;
     z-index: 30;
   }
 
   .bottomMenuButtons .back,
   .finishGameBtn {
-    min-height: 38px;
-    padding: 7px;
-    font-size: 13px;
-    border-radius: 12px;
+    min-height: 34px;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 11px;
+  }
+
+  .historyPanel {
+    display: block;
+    top: auto;
+    right: 10px;
+    bottom: 220px;
+    width: 150px;
+    max-height: 90px;
+    padding: 8px;
+    border-radius: 14px;
+    z-index: 22;
+    opacity: 0.92;
+  }
+
+  .historyPanel h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+  }
+
+  .historyPanel h3::before,
+  .historyPanel h3::after {
+    display: none;
+  }
+
+  .historyItem {
+    font-size: 10px;
+    line-height: 1.15;
+    padding: 2px 0;
+    margin: 0;
   }
 
   .roundTimer {
     right: 10px;
     bottom: 10px;
     padding: 8px 10px;
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 12px;
   }
 
   .checkOverlay {
-    font-size: 38px;
+    font-size: 36px;
     padding: 20px;
   }
 
@@ -1357,15 +1380,6 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     gap: 8px;
   }
 
-  .bidTypeCard {
-    min-height: 70px;
-    padding: 10px;
-  }
-
-  .bidTypeCard span {
-    font-size: 17px;
-  }
-
   .bidOptionsGrid {
     grid-template-columns: repeat(3, 1fr);
     gap: 7px;
@@ -1373,52 +1387,54 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .bidOptionChip {
-    min-height: 44px;
+    min-height: 42px;
     padding: 7px;
-    font-size: 13px;
+    font-size: 12px;
   }
 }
 
 @media (max-width: 390px) {
   .table {
-    height: 760px;
-    min-height: 760px;
+    height: 735px;
+    min-height: 735px;
   }
 
   .bot {
-    width: 74px;
-    height: 92px;
+    width: 70px;
+    height: 84px;
   }
 
   .botName {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .centerTable {
-    top: 30%;
-    width: 225px;
+    width: 215px;
+    top: 28%;
   }
 
   .centerTable h3 {
-    font-size: 27px;
+    font-size: 26px;
   }
 
   .centerTable p {
-    font-size: 14px;
-  }
-
-  .you {
-    bottom: 10px;
+    font-size: 13px;
   }
 
   .you .gameCard {
-    width: 54px;
-    height: 76px;
-    font-size: 28px;
+    width: 48px;
+    height: 68px;
+    font-size: 25px;
   }
 
   .buttons button {
-    min-height: 39px;
-    font-size: 13px;
+    min-height: 36px;
+    font-size: 12px;
+  }
+
+  .historyPanel {
+    bottom: 205px;
+    width: 140px;
   }
 }
+
