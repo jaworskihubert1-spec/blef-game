@@ -1232,18 +1232,18 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 
   .left {
     left: 2%;
-    top: 30%;
+    top: 29%;
     transform: translateY(-50%);
   }
 
   .right {
-    right: 5%;
-    top: 28%;
+    right: 2%;
+    top: 29%;
     transform: translateY(-50%);
   }
 
   .top2 {
-    right: 8%;
+    right: 50%;
     top: 13%;
   }
 
