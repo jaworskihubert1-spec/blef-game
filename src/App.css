@@ -1834,3 +1834,36 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     width: 112px;
   }
 }
+
+@media (max-width: 850px) {
+  .app {
+    min-height: 100svh;
+    padding: 8px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .table {
+    width: 100%;
+    max-width: 430px;
+    height: 900px;
+    min-height: 900px;
+    margin: 0 auto;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .you {
+    left: 50%;
+    bottom: 24px;
+    width: calc(100% - 24px);
+    max-width: 390px;
+    min-height: auto;
+  }
+
+  .bottomMenuButtons {
+    left: 14px;
+    bottom: 92px;
+    width: 130px;
+  }
+}
