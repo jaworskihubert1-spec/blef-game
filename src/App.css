@@ -1225,27 +1225,32 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .top {
-    left: 20%;
-    top: 35%;
+  left: 50%;
+  top: 4%;
+  right: auto;
+  transform: translateX(-50%);
+}
 
-  }
+.left {
+  left: 5%;
+  top: 28%;
+  right: auto;
+  transform: translateY(-50%);
+}
 
-  .left {
-    left: 20%;
-    top: 35%;
+.top2 {
+  left: auto;
+  right: 7%;
+  top: 14%;
+  transform: none;
+}
 
-  }
-
-  .right {
-    right: 20%;
-    top: 35%;
-
-  }
-
-  .top2 {
-    right: 20%;
-    top: 35%;
-  }
+.right {
+  left: auto;
+  right: 5%;
+  top: 28%;
+  transform: translateY(-50%);
+}
 
   .you {
     left: 50%;
