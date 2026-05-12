@@ -1237,8 +1237,8 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .right {
-    right: 2%;
-    top: 29%;
+    right: 5%;
+    top: 10%;
     transform: translateY(-50%);
   }
 
