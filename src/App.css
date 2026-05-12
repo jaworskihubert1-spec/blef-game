@@ -1243,8 +1243,8 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .top2 {
-    right: 50%;
-    top: 13%;
+    right: 2%;
+    top: 29%;
   }
 
   .you {
