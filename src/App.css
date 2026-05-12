@@ -1227,19 +1227,19 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   .top {
     left: 50%;
     top: 4%;
-    transform: translateX(-50%);
+
   }
 
   .left {
     left: 5%;
     top: 30%;
-    transform: translateY(-50%);
+
   }
 
   .right {
     right: 2%;
     top: 29%;
-    transform: translateY(-50%);
+
   }
 
   .top2 {
