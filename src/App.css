@@ -1231,8 +1231,8 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .left {
-    left: 30%;
-    top: 29%;
+    left: 2%;
+    top: 20;
     transform: translateY(-50%);
   }
 
