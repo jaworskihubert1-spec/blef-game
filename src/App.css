@@ -1226,7 +1226,7 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 
   .top {
   left: 50%;
-  top: 50%;
+  top: 500%;
   right: auto;
   transform: translateX(-50%);
 }
