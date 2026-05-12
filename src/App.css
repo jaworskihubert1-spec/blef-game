@@ -1099,6 +1099,8 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 
 /* ===== MOBILE FINAL CLEAN UI ===== */
 
+/* ===== MOBILE LAYOUT - GRID, NO CHAOS ===== */
+
 @media (max-width: 850px) {
   html,
   body,
@@ -1119,82 +1121,98 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     width: 100%;
     min-height: 100svh;
     padding: 6px;
-    align-items: flex-start;
+    display: flex;
     justify-content: center;
+    align-items: flex-start;
   }
 
   .table {
+    position: relative;
+
     width: 100%;
     max-width: 430px;
-    height: 760px;
+
+    height: auto;
     min-height: 760px;
-    margin: 0 auto;
+
+    padding: 82px 12px 12px;
+
+    display: grid;
+    grid-template-columns: 76px 1fr 76px;
+    grid-template-rows:
+      92px
+      92px
+      180px
+      58px
+      auto;
+    gap: 6px 8px;
+
     border-radius: 22px;
     overflow: hidden;
   }
 
   .table::before {
     left: 50%;
-    top: 7%;
+    top: 78px;
     transform: translateX(-50%);
-    width: 88%;
-    height: 39%;
+    width: 91%;
+    height: 300px;
     border-width: 7px;
     outline-width: 3px;
   }
 
   .table::after {
     left: 50%;
-    top: 18%;
+    top: 160px;
     transform: translateX(-50%);
-    width: 60%;
-    height: 19%;
+    width: 62%;
+    height: 145px;
   }
 
-  .centerTable {
-    left: 50%;
-    top: 28%;
-    width: 230px;
-    min-height: 120px;
-    padding: 4px;
-    overflow: hidden;
+  .top,
+  .left,
+  .right,
+  .top2,
+  .centerTable,
+  .historyPanel,
+  .you,
+  .bottomMenuButtons {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    transform: none;
   }
 
-  .centerTable h3 {
-    font-size: 28px;
-    margin-bottom: 4px;
+  .bottomMenuButtons {
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    z-index: 30;
+    width: 112px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .centerTable h3::before,
-  .centerTable h3::after {
-    display: none;
-  }
-
-  .centerTable p {
-    font-size: 14px;
-    margin: 3px 0;
-    line-height: 1.15;
-    white-space: nowrap;
-  }
-
-  .centerTable div::after {
-    margin-top: 7px;
-    font-size: 17px;
-    letter-spacing: 8px;
-  }
-
-  .roundResult {
-    font-size: 15px !important;
-    white-space: normal !important;
-    line-height: 1.15 !important;
+  .bottomMenuButtons .back,
+  .finishGameBtn {
+    min-height: 36px;
+    padding: 6px;
+    font-size: 12px;
+    border-radius: 11px;
   }
 
   .bot {
-    width: 74px;
+    width: 76px;
     height: 88px;
     border-radius: 16px;
     padding: 4px;
     gap: 2px;
+    z-index: 10;
+    justify-self: center;
+    align-self: center;
   }
 
   .bot::before {
@@ -1216,53 +1234,135 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     font-size: 15px;
   }
 
+  .bot .cardsStack {
+    min-height: 44px;
+  }
+
   .bot .gameCard {
-    width: 36px;
-    height: 50px;
-    font-size: 13px;
+    width: 34px;
+    height: 48px;
+    font-size: 12px;
     border-width: 2px;
     margin-left: -10px;
   }
 
-  .top,
-  .left,
-  .right,
-  .top2 {
-    left: auto;
-    right: auto;
-    top: auto;
-    bottom: auto;
-    transform: none;
+  .top {
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .left {
-    left: 4%;
-    top: 22%;
-  }
-
-  .top {
-    left: 27%;
-    top: 10%;
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .top2 {
-    right: 27%;
-    top: 10%;
+    grid-column: 3;
+    grid-row: 1;
   }
 
   .right {
-    right: 4%;
-    top: 22%;
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .centerTable {
+    grid-column: 1 / 4;
+    grid-row: 2 / 4;
+
+    width: 230px;
+    min-height: 120px;
+
+    justify-self: center;
+    align-self: start;
+
+    margin-top: 34px;
+
+    padding: 4px;
+    overflow: hidden;
+    z-index: 8;
+  }
+
+  .centerTable h3 {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+
+  .centerTable h3::before,
+  .centerTable h3::after {
+    display: none;
+  }
+
+  .centerTable p {
+    max-width: 220px;
+    font-size: 14px;
+    margin: 3px auto;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .centerTable div::after {
+    margin-top: 7px;
+    font-size: 17px;
+    letter-spacing: 8px;
+  }
+
+  .roundResult {
+    white-space: normal !important;
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+  }
+
+  .historyPanel {
+    grid-column: 1 / 4;
+    grid-row: 4;
+
+    display: block;
+
+    width: 100%;
+    max-height: 58px;
+
+    padding: 6px 10px;
+    border-radius: 14px;
+
+    z-index: 20;
+    opacity: 0.92;
+    overflow-y: auto;
+  }
+
+  .historyPanel h3 {
+    margin: 0 0 2px;
+    font-size: 13px;
+  }
+
+  .historyPanel h3::before,
+  .historyPanel h3::after {
+    display: none;
+  }
+
+  .historyItem,
+  .historyPanel p {
+    font-size: 10px;
+    line-height: 1.1;
+    padding: 1px 0;
+    margin: 0;
   }
 
   .you {
-    left: 50%;
-    bottom: 12px;
-    width: calc(100% - 20px);
-    max-width: 390px;
+    grid-column: 1 / 4;
+    grid-row: 5;
+
+    width: 100%;
+    max-width: none;
+
     min-height: auto;
+
     padding: 10px 12px 12px;
     border-radius: 24px;
+
+    z-index: 15;
   }
 
   .you::before {
@@ -1314,53 +1414,6 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     width: 100%;
   }
 
-  .bottomMenuButtons {
-    left: 10px;
-    top: 8px;
-    bottom: auto;
-    width: 98px;
-    gap: 6px;
-    z-index: 30;
-  }
-
-  .bottomMenuButtons .back,
-  .finishGameBtn {
-    min-height: 34px;
-    padding: 6px;
-    font-size: 12px;
-    border-radius: 11px;
-  }
-
-  .historyPanel {
-    display: block;
-    top: auto;
-    right: 10px;
-    bottom: 220px;
-    width: 150px;
-    max-height: 90px;
-    padding: 8px;
-    border-radius: 14px;
-    z-index: 22;
-    opacity: 0.92;
-  }
-
-  .historyPanel h3 {
-    margin: 0 0 4px;
-    font-size: 15px;
-  }
-
-  .historyPanel h3::before,
-  .historyPanel h3::after {
-    display: none;
-  }
-
-  .historyItem {
-    font-size: 10px;
-    line-height: 1.15;
-    padding: 2px 0;
-    margin: 0;
-  }
-
   .roundTimer {
     right: 10px;
     bottom: 10px;
@@ -1401,8 +1454,16 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 
 @media (max-width: 390px) {
   .table {
-    height: 735px;
+    grid-template-columns: 70px 1fr 70px;
+    grid-template-rows:
+      86px
+      86px
+      170px
+      54px
+      auto;
+
     min-height: 735px;
+    padding-top: 78px;
   }
 
   .bot {
@@ -1416,7 +1477,7 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 
   .centerTable {
     width: 215px;
-    top: 28%;
+    margin-top: 32px;
   }
 
   .centerTable h3 {
@@ -1424,7 +1485,12 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .centerTable p {
+    max-width: 205px;
     font-size: 13px;
+  }
+
+  .historyPanel {
+    max-height: 54px;
   }
 
   .you .gameCard {
@@ -1437,12 +1503,4 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     min-height: 36px;
     font-size: 12px;
   }
-
-  .historyPanel {
-    bottom: 205px;
-    width: 140px;
-  }
 }
-
-
-
