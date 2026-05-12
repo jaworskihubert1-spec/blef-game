@@ -1224,31 +1224,41 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     margin-left: -10px;
   }
 
-  .top {
-  left: 50%;
-  top: 500%;
-  right: auto;
-  transform: translateX(-50%);
-}
-
-.left {
-  left: 5%;
-  top: 28%;
-  right: auto;
-  transform: translateY(-50%);
-}
-
+  .top,
+.left,
+.right,
 .top2 {
   left: auto;
-  right: 7%;
-  top: 14%;
+  right: auto;
+  top: auto;
+  bottom: auto;
   transform: none;
 }
 
+/* Bot 2 - góra */
+.top {
+  left: 50%;
+  top: 4%;
+  transform: translateX(-50%);
+}
+
+/* Bot 1 - lewa strona */
+.left {
+  left: 5%;
+  top: 29%;
+  transform: translateY(-50%);
+}
+
+/* Bot 3 - prawa góra */
+.top2 {
+  right: 6%;
+  top: 14%;
+}
+
+/* Bot 4 - prawa strona */
 .right {
-  left: auto;
   right: 5%;
-  top: 28%;
+  top: 29%;
   transform: translateY(-50%);
 }
 
