@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import "./Mobile.css";
 
 const allCardValues = ["9", "10", "J", "Q", "K", "A", "8", "7", "6"];
 const cardHighToLow = ["A", "K", "Q", "J", "10", "9", "8", "7", "6"];
