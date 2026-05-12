@@ -1,0 +1,9 @@
+@media (max-width: 850px) {
+  .table {
+    border: 6px solid red !important;
+  }
+
+  .bot {
+    display: none !important;
+  }
+}
