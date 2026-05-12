@@ -1241,8 +1241,8 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 }
 
 .top {
-  left: 700%;
-  top: 15%;
+  left: 20%;
+  top: 150%;
 }
 
 .top2 {
