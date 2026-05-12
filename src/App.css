@@ -1242,7 +1242,7 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 
 .top {
   left: 200%;
-  top: 70%;
+  top: 40%;
 }
 
 .top2 {
