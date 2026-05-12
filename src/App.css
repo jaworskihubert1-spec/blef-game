@@ -1225,26 +1225,24 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   }
 
   .top {
-    left: 30%;
-    top: 4%;
+    left: 50%;
+    top: 3%;
     transform: translateX(-50%);
   }
 
   .left {
-    left: 5%;
-    top: 28%;
+    left: 2%;
+    top: 30%;
     transform: translateY(-50%);
   }
 
   .right {
-    left: auto;
     right: 5%;
     top: 28%;
     transform: translateY(-50%);
   }
 
   .top2 {
-    left: auto;
     right: 8%;
     top: 13%;
   }
