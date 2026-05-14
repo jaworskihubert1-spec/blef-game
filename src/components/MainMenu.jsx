@@ -1,4 +1,4 @@
-function MainMenu({ onStartGame, onShowRules }) {
+function MainMenu({ onStartGame, onShowRules, onShowOnline }) {
   return (
     <div className="menu">
       <h1>BLEF GAME</h1>
@@ -6,7 +6,7 @@ function MainMenu({ onStartGame, onShowRules }) {
 
       <div className="menuButtons">
         <button onClick={onStartGame}>♠ Graj z botami</button>
-        <button disabled>🌐 Online — wkrótce</button>
+        <button onClick={onStartGame}>🌐 Online</button>
         <button onClick={onShowRules}>📖 Zasady</button>
         <button disabled>⚙ Ustawienia — wkrótce</button>
       </div>
@@ -15,3 +15,4 @@ function MainMenu({ onStartGame, onShowRules }) {
 }
 
 export default MainMenu;
+
