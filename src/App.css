@@ -952,3 +952,35 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     font-size: 18px;
   }
 }
+
+.rulesScreen {
+  min-height: 100svh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.rulesScreen h1 {
+  margin-bottom: 8px;
+}
+
+.rulesBox {
+  width: 100%;
+  max-width: 420px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.rulesBox h3 {
+  margin-bottom: 8px;
+}
+
+.rulesBox p {
+  margin: 6px 0;
+}
