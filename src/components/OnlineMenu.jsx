@@ -1,10 +1,25 @@
-import { useState } from "react";
-import { createRoom, deleteRoom } from "../online/rooms";
+import { useEffect, useState } from "react";
+
+import {
+  createRoom,
+  deleteRoom,
+  joinRoom,
+  listenToRooms,
+} from "../online/rooms";
 
 function OnlineMenu({ onBack }) {
   const [nick, setNick] = useState("");
-  const [roomId, setRoomId] = useState("");
+  const [currentRoomId, setCurrentRoomId] = useState("");
+  const [rooms, setRooms] = useState([]);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = listenToRooms((roomsFromDb) => {
+      setRooms(roomsFromDb);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   async function handleCreateRoom() {
     if (!nick.trim()) {
@@ -14,19 +29,46 @@ function OnlineMenu({ onBack }) {
 
     setMessage("Tworzę pokój...");
 
-    const newRoomId = await createRoom(nick.trim());
+    try {
+      const newRoomId = await createRoom(nick.trim());
 
-    setRoomId(newRoomId);
-    setMessage(`Pokój utworzony. Kod: ${newRoomId}`);
+      setCurrentRoomId(newRoomId);
+      setMessage(`Pokój utworzony. Kod: ${newRoomId}`);
+    } catch (error) {
+      setMessage(error.message || "Nie udało się utworzyć pokoju.");
+    }
+  }
+
+  async function handleJoinRoom(roomId) {
+    if (!nick.trim()) {
+      setMessage("Najpierw wpisz nick.");
+      return;
+    }
+
+    setMessage("Dołączam do pokoju...");
+
+    try {
+      await joinRoom(roomId, nick.trim());
+
+      setCurrentRoomId(roomId);
+      setMessage("Dołączono do pokoju.");
+    } catch (error) {
+      setMessage(error.message || "Nie udało się dołączyć do pokoju.");
+    }
   }
 
   async function handleBack() {
-  if (roomId) {
-    await deleteRoom(roomId);
-  }
+    if (currentRoomId) {
+      const currentRoom = rooms.find((room) => room.id === currentRoomId);
+      const isHost = currentRoom?.host === nick.trim();
 
-  onBack();
-}
+      if (isHost) {
+        await deleteRoom(currentRoomId);
+      }
+    }
+
+    onBack();
+  }
 
   return (
     <div className="rulesScreen">
@@ -34,6 +76,7 @@ function OnlineMenu({ onBack }) {
 
       <div className="rulesBox">
         <h3>Twój nick</h3>
+
         <input
           value={nick}
           onChange={(e) => setNick(e.target.value)}
@@ -42,25 +85,60 @@ function OnlineMenu({ onBack }) {
       </div>
 
       <div className="rulesBox">
-        <h3>Pokój</h3>
-        <button onClick={handleCreateRoom}>Utwórz pokój</button>
+        <h3>Utwórz pokój</h3>
 
-        {roomId && (
+        <button onClick={handleCreateRoom}>♠ Utwórz pokój</button>
+
+        {currentRoomId && (
           <p>
-            Kod pokoju: <strong>{roomId}</strong>
+            Twój pokój: <strong>{currentRoomId}</strong>
           </p>
         )}
-
-        {message && <p>{message}</p>}
       </div>
 
+      <div className="rulesBox">
+        <h3>Aktywne pokoje</h3>
+
+        {rooms.length === 0 ? (
+          <p>Brak aktywnych pokoi.</p>
+        ) : (
+          <div className="roomList">
+            {rooms.map((room) => {
+              const playersCount = room.players?.length || 0;
+              const maxPlayers = room.maxPlayers || 5;
+              const isFull = playersCount >= maxPlayers;
+              const isCurrentRoom = room.id === currentRoomId;
+
+              return (
+                <div key={room.id} className="roomItem">
+                  <div>
+                    <strong>Pokój: {room.host}</strong>
+                    <p>
+                      Gracze: {playersCount}/{maxPlayers}
+                    </p>
+                    <small>Kod: {room.id}</small>
+                  </div>
+
+                  <button
+                    disabled={isFull || isCurrentRoom}
+                    onClick={() => handleJoinRoom(room.id)}
+                  >
+                    {isCurrentRoom ? "Jesteś w pokoju" : isFull ? "Pełny" : "Dołącz"}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {message && <p>{message}</p>}
+
       <button className="back" onClick={handleBack}>
-  Powrót
-</button>
+        Powrót
+      </button>
     </div>
   );
 }
-
-
 
 export default OnlineMenu;

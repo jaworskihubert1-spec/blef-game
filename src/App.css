@@ -984,3 +984,35 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
 .rulesBox p {
   margin: 6px 0;
 }
+
+.roomList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.roomItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 14px;
+
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.roomItem p {
+  margin: 4px 0;
+}
+
+.roomItem small {
+  opacity: 0.75;
+  word-break: break-all;
+}
+
+.roomItem button {
+  flex-shrink: 0;
+}
