@@ -170,7 +170,11 @@ function getOwnCardsForBot(botIndex) {
 }
 
 function getLabelValues(label) {
-  return label?.match(/A|K|Q|J|10|9|8|7|6/g) || [];
+  if (!label) return [];
+
+  const onlyCardsPart = label.split("(")[0].trim();
+
+  return onlyCardsPart.match(/10|A|K|Q|J|9|8|7|6/g) || [];
 }
 
 function getOwnSupportForLabel(label, ownCards) {
@@ -1433,3 +1437,5 @@ setCardsWereChecked(false);
 }
 
 export default App;
+
+
