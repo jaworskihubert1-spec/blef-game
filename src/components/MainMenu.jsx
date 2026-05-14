@@ -5,7 +5,7 @@ function MainMenu({ onStartGame, onShowRules }) {
       <p>5 graczy. Jedna karta. Blef albo prawda.</p>
 
       <div className="menuButtons">
-        <button disabled={onStartGame}>♠ Graj z botami</button>
+        <button onClick={onStartGame}>♠ Graj z botami</button>
         <button disabled>🌐 Online — wkrótce</button>
         <button onClick={onShowRules}>📖 Zasady</button>
         <button disabled>⚙ Ustawienia — wkrótce</button>
