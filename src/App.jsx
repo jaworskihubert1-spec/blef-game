@@ -23,7 +23,7 @@ import {
   getAllBidOptions,
 } from "./game/bids";
 
-
+import { dealCardsForCounts } from "./game/deck";
 
 function getMatchingCardIndexesForDeclaration(declaredCard, allCards) {
   if (!declaredCard) return [];
@@ -220,50 +220,6 @@ function checkDeclaration(declaredCard, allCards) {
 
   return false;
 }
-
-function createDeck(totalCardsOnTable = 5) {
-  const activeCards = getActiveCardValues(totalCardsOnTable);
-  const deck = [];
-
-  activeCards.forEach((card) => {
-    suits.forEach((suit) => {
-      deck.push(card + suit.symbol);
-    });
-  });
-
-  return deck.sort(() => Math.random() - 0.5);
-}
-
-
-function dealCardsForCounts(counts) {
-  const totalCardsOnTable = counts.reduce((sum, count) => {
-    if (count >= 5) return sum;
-    return sum + count;
-  }, 0);
-
-  const deck = createDeck(totalCardsOnTable);
-
-  const result = {
-    player: [],
-    bots: [[], [], [], []],
-  };
-
-  for (let i = 0; i < counts.length; i++) {
-    if (counts[i] >= 5) continue;
-
-    const cardsToGive = deck.splice(0, counts[i]);
-
-    if (i === 0) {
-      result.player = cardsToGive;
-    } else {
-      result.bots[i - 1] = cardsToGive;
-    }
-  }
-
-  return result;
-}
-
-
 
 
 function App() {
