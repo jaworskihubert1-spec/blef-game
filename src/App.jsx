@@ -1067,13 +1067,31 @@ setCardsWereChecked(false);
           </div>
           <div className={`bot top ${currentPlayerIndex === 2 ? "activeTurn" : ""}`}>
   <div className="botName">Bot 2<br /><span>Agresywny</span></div>
-  <div className="backCard">{showAllCards ? renderCards(bots[1], playerCard.length + bots[0].length) : `🂠 x${cardCounts[2]}`}</div>
+  <div className="backCard">{showAllCards ? (
+  <CardStack
+    cardsArray={bots[1]}
+    globalStartIndex={playerCard.length + bots[0].length}
+    highlightedCardIndexes={highlightedCardIndexes}
+    cardsWereChecked={cardsWereChecked}
+  />
+) : (
+  `🂠 x${cardCounts[2]}`
+)}</div>
 </div>
 
           <div className="middleRow">
             <div className={`bot left ${currentPlayerIndex === 1 ? "activeTurn" : ""}`}>
   <div className="botName">Bot 1<br /><span>Ostrożny</span></div>
-  <div className="backCard">{showAllCards ? renderCards(bots[0], playerCard.length) : `🂠 x${cardCounts[1]}`}</div>
+  <div className="backCard">{showAllCards ? (
+  <CardStack
+    cardsArray={bots[0]}
+    globalStartIndex={playerCard.length}
+    highlightedCardIndexes={highlightedCardIndexes}
+    cardsWereChecked={cardsWereChecked}
+  />
+) : (
+  `🂠 x${cardCounts[1]}`
+)}</div>
 </div>
 
             <div className="centerTable">
@@ -1089,20 +1107,45 @@ setCardsWereChecked(false);
 
            <div className={`bot right ${currentPlayerIndex === 4 ? "activeTurn" : ""}`}>
   <div className="botName">Bot 4<br /><span>Cwaniak</span></div>
-  <div className="backCard">{showAllCards ? renderCards(bots[3], playerCard.length + bots[0].length + bots[1].length + bots[2].length) : `🂠 x${cardCounts[4]}`}</div>
+  <div className="backCard">{showAllCards ? (
+  <CardStack
+    cardsArray={bots[3]}
+    globalStartIndex={
+      playerCard.length + bots[0].length + bots[1].length + bots[2].length
+    }
+    highlightedCardIndexes={highlightedCardIndexes}
+    cardsWereChecked={cardsWereChecked}
+  />
+) : (
+  `🂠 x${cardCounts[4]}`
+)}</div>
 </div>
           </div>
 
           <div className={`bot top2 ${currentPlayerIndex === 3 ? "activeTurn" : ""}`}>
   <div className="botName">Bot 3<br /><span>Chaos</span></div>
-  <div className="backCard">{showAllCards ? renderCards(bots[2], playerCard.length + bots[0].length + bots[1].length) : `🂠 x${cardCounts[3]}`}</div>
+  <div className="backCard">{showAllCards ? (
+  <CardStack
+    cardsArray={bots[2]}
+    globalStartIndex={playerCard.length + bots[0].length + bots[1].length}
+    highlightedCardIndexes={highlightedCardIndexes}
+    cardsWereChecked={cardsWereChecked}
+  />
+) : (
+  `🂠 x${cardCounts[3]}`
+)}</div>
 </div>
 
           <div className={`you ${currentPlayerIndex === 0 ? "activeTurnPlayer" : ""}`}>
             <p>Twoja karta</p>
             <p>Karty: {cardCounts[0]}</p>
             <div className="playerCards">
-  {renderCards(playerCard, 0)}
+  <CardStack
+  cardsArray={playerCard}
+  globalStartIndex={0}
+  highlightedCardIndexes={highlightedCardIndexes}
+  cardsWereChecked={cardsWereChecked}
+/>
 </div>
             
             <div className="buttons">
