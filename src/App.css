@@ -921,3 +921,23 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     grid-column: 1 / 4;
   }
 }
+
+.menuButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.menuButtons button {
+  width: 100%;
+  max-width: 260px;
+
+  margin: 0 auto;
+
+  padding: 14px 18px;
+  border-radius: 14px;
+
+  font-size: 16px;
+}
