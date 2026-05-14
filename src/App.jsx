@@ -1084,7 +1084,16 @@ setCardsWereChecked(false);
     ⏳ {message}
   </div>
 )}
-      {screen === "menu" && <MainMenu onStartGame={startGame} />}
+      {screen === "menu" && (
+  <MainMenu
+    onStartGame={startGame}
+    onShowRules={() => setScreen("rules")}
+  />
+)}
+
+{screen === "rules" && (
+  <RulesScreen onBack={() => setScreen("menu")} />
+)}
 
       {screen === "game" && (
         <div className="table">
