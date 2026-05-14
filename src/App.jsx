@@ -32,6 +32,8 @@ import {
 
 import CardStack from "./components/CardStack";
 
+import MainMenu from "./components/MainMenu";
+
 function App() {
   const [screen, setScreen] = useState("menu");
   const [history, setHistory] = useState([]);
@@ -1042,13 +1044,7 @@ setCardsWereChecked(false);
     ⏳ {message}
   </div>
 )}
-      {screen === "menu" && (
-        <div className="menu">
-          <h1>BLEF GAME</h1>
-          <p>5 graczy. Jedna karta. Blef albo prawda.</p>
-          <button onClick={startGame}>Graj</button>
-        </div>
-      )}
+      {screen === "menu" && <MainMenu onStartGame={startGame} />}
 
       {screen === "game" && (
         <div className="table">
