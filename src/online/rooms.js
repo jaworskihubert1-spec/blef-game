@@ -94,17 +94,14 @@ export async function joinRoom(roomId, playerName) {
 }
 
 export function listenToRooms(callback) {
-  const roomsQuery = query(
-    collection(db, "rooms"),
-    where("status", "==", "waiting"),
-    orderBy("createdAt", "desc")
-  );
-
-  return onSnapshot(roomsQuery, (snapshot) => {
-    const rooms = snapshot.docs.map((docItem) => ({
-      id: docItem.id,
-      ...docItem.data(),
-    }));
+  return onSnapshot(collection(db, "rooms"), (snapshot) => {
+    const rooms = snapshot.docs
+      .map((docItem) => ({
+        id: docItem.id,
+        ...docItem.data(),
+      }))
+      .filter((room) => room.status === "waiting")
+      .sort((a, b) => b.createdAt - a.createdAt);
 
     callback(rooms);
   });
