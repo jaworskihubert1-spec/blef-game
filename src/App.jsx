@@ -875,10 +875,13 @@ function botMove(
   countsSnapshot,
 });
 
-    const shouldCheck =
-      lastBidLabel &&
-      (Math.random() < checkChance || possibleOptions.length === 0);
+    const isEarlyRound =
+  totalCardsOnTable <= 5 && bidPower < 20000;
 
+const shouldCheck =
+  lastBidLabel &&
+  !isEarlyRound &&
+  (Math.random() < checkChance || possibleOptions.length === 0);
     if (shouldCheck) {
       setMessage(`${botName} (${personality.label}) sprawdza.`);
       handleCheck(
