@@ -9,6 +9,19 @@ function RulesScreen({ onBack }) {
       </p>
 
       <div className="rulesBox">
+        <h3>🎴 Start rundy</h3>
+
+        <p>
+          Każdy aktywny gracz dostaje tyle kart,
+          ile ma punktów karnych.
+        </p>
+
+        <p>
+          Na początku wszyscy mają po 1 karcie.
+        </p>
+      </div>
+
+      <div className="rulesBox">
   <h3>🃏 Deklaracje</h3>
 
   <p>
@@ -58,6 +71,20 @@ function RulesScreen({ onBack }) {
     karę dostaje sprawdzający.
   </p>
 </div>
+
+      <div className="rulesBox">
+        <h3>💀 Eliminacja</h3>
+
+        <p>
+          Po otrzymaniu 5 kart karnych
+          odpadasz z gry.
+        </p>
+
+        <p>
+          Wygrywa ostatni gracz,
+          który pozostanie przy stole.
+        </p>
+      </div>
 
       <button className="back" onClick={onBack}>
         Powrót
