@@ -34,6 +34,8 @@ import CardStack from "./components/CardStack";
 
 import MainMenu from "./components/MainMenu";
 
+import RulesScreen from "./components/RulesScreen";
+
 function App() {
   const [screen, setScreen] = useState("menu");
   const [history, setHistory] = useState([]);
@@ -76,6 +78,10 @@ const [eliminatedPlayers, setEliminatedPlayers] = useState([]);
 
   const [highlightedCardIndexes, setHighlightedCardIndexes] = useState([]);
 const [cardsWereChecked, setCardsWereChecked] = useState(false);
+
+
+  const [screen, setScreen] = useState("menu");
+
 
 const [playerStats, setPlayerStats] = useState(
   players.map(() => ({
@@ -944,6 +950,7 @@ const shouldCheck =
   );
   return;
 }
+
 
     addHistory(`${botName} (${personality.label}): ${finalOption.label}`);
     recordBid(botIndex, finalOption, bidPower);
