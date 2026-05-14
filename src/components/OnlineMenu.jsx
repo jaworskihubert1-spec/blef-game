@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createRoom } from "../online/rooms";
+import { createRoom, deleteRoom } from "../online/rooms";
 
 function OnlineMenu({ onBack }) {
   const [nick, setNick] = useState("");
@@ -46,11 +46,19 @@ function OnlineMenu({ onBack }) {
         {message && <p>{message}</p>}
       </div>
 
-      <button className="back" onClick={onBack}>
-        Powrót
-      </button>
+      <button className="back" onClick={handleBack}>
+  Powrót
+</button>
     </div>
   );
+}
+
+async function handleBack() {
+  if (roomId) {
+    await deleteRoom(roomId);
+  }
+
+  onBack();
 }
 
 export default OnlineMenu;
