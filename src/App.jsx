@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
 
 import { cardHighToLow, cardLowToHigh, suits } from "./data/cards";
@@ -41,6 +41,8 @@ function App() {
   const [history, setHistory] = useState([]);
   const [playerCard, setPlayerCard] = useState([]);
   const [bots, setBots] = useState([]);
+  const playerCardRef = useRef([]);
+const botsRef = useRef([]);
   const [currentTurn, setCurrentTurn] = useState("Ty");
   const [message, setMessage] = useState("");
   const [declaredCard, setDeclaredCard] = useState("");
@@ -99,11 +101,14 @@ const [playerStats, setPlayerStats] = useState(
 function getLiveTableCards(counts = cardCounts) {
   const liveCards = [];
 
+  const currentPlayerCard = playerCardRef.current;
+  const currentBots = botsRef.current;
+
   if (counts[0] < 5) {
-    liveCards.push(...playerCard);
+    liveCards.push(...currentPlayerCard);
   }
 
-  bots.forEach((botCards, botArrayIndex) => {
+  currentBots.forEach((botCards, botArrayIndex) => {
     const playerIndex = botArrayIndex + 1;
 
     if (counts[playerIndex] < 5) {
@@ -578,6 +583,9 @@ function startGame() {
 
   const dealt = dealCardsForCounts(initialCounts);
 
+  playerCardRef.current = dealt.player;
+  botsRef.current = dealt.bots;
+
   setPlayerCard(dealt.player);
   setBots(dealt.bots);
 
@@ -1042,6 +1050,9 @@ function dealNewRound(forcedStarterIndex = nextStarterIndex, countsOverride = ca
   setCardCounts(countsOverride);
 
   const dealt = dealCardsForCounts(countsOverride);
+
+  playerCardRef.current = dealt.player;
+  botsRef.current = dealt.bots;
 
   setPlayerCard(dealt.player);
   setBots(dealt.bots);
