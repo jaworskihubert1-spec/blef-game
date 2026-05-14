@@ -3,30 +3,77 @@ function RulesScreen({ onBack }) {
     <div className="rulesScreen">
       <h1>Zasady gry</h1>
 
-      <p>
-        Celem gry jest przetrwać jak najdłużej. Gracze po kolei deklarują coraz
-        mocniejsze układy kart albo sprawdzają poprzednią deklarację.
+      <p className="rulesIntro">
+        Blefuj. Ryzykuj. Sprawdzaj innych.
+        Ostatni gracz przy stole wygrywa.
       </p>
 
       <div className="rulesBox">
-        <h3>Przebieg rundy</h3>
-        <p>Każdy aktywny gracz dostaje tyle kart, ile ma punktów karnych.</p>
-        <p>Pierwszy gracz składa deklarację, np. A, para 10, strit albo full.</p>
-        <p>Następny gracz musi przebić deklarację albo powiedzieć „Sprawdzam”.</p>
-      </div>
+        <h3>🎴 Start rundy</h3>
 
-      <div className="rulesBox">
-        <h3>Sprawdzanie</h3>
         <p>
-          Jeśli deklaracja była fałszywa, karę dostaje deklarujący. Jeśli była
-          prawdziwa, karę dostaje sprawdzający.
+          Każdy aktywny gracz dostaje tyle kart,
+          ile ma punktów karnych.
+        </p>
+
+        <p>
+          Na początku wszyscy mają po 1 karcie.
         </p>
       </div>
 
       <div className="rulesBox">
-        <h3>Odpadanie</h3>
-        <p>Gracz odpada po osiągnięciu 5 kart karnych.</p>
-        <p>Wygrywa ostatni gracz, który zostanie w grze.</p>
+        <h3>🃏 Deklaracje</h3>
+
+        <p>
+          Gracze po kolei deklarują układy kart:
+          wysokie karty, pary, strity, fulla i więcej.
+        </p>
+
+        <p>
+          Każda kolejna deklaracja musi być mocniejsza
+          od poprzedniej.
+        </p>
+
+        <p>
+          Nie musisz mówić prawdy.
+        </p>
+      </div>
+
+      <div className="rulesBox">
+        <h3>👀 Sprawdzam</h3>
+
+        <p>
+          Zamiast podbijać możesz powiedzieć:
+          „Sprawdzam”.
+        </p>
+
+        <p>
+          Wszystkie karty zostają odkryte.
+        </p>
+
+        <p>
+          Jeśli deklaracja była fałszywa —
+          karę dostaje blefujący.
+        </p>
+
+        <p>
+          Jeśli deklaracja była prawdziwa —
+          karę dostaje sprawdzający.
+        </p>
+      </div>
+
+      <div className="rulesBox">
+        <h3>💀 Eliminacja</h3>
+
+        <p>
+          Po otrzymaniu 5 kart karnych
+          odpadasz z gry.
+        </p>
+
+        <p>
+          Wygrywa ostatni gracz,
+          który pozostanie przy stole.
+        </p>
       </div>
 
       <button className="back" onClick={onBack}>
