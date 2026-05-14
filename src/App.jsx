@@ -1,74 +1,20 @@
 import { useState } from "react";
 import "./App.css";
 
-const allCardValues = ["9", "10", "J", "Q", "K", "A", "8", "7", "6"];
-const cardHighToLow = ["A", "K", "Q", "J", "10", "9", "8", "7", "6"];
-const cardLowToHigh = ["6", "7", "8", "9", "10", "J", "Q", "K", "A"];
+import { cardHighToLow, cardLowToHigh } from "./data/cards";
+import { botPersonalities } from "./data/bots";
 
-const suits = [
-  { name: "Kier", symbol: "♥" },
-  { name: "Karo", symbol: "♦" },
-  { name: "Trefl", symbol: "♣" },
-  { name: "Pik", symbol: "♠" },
-];
-
-const botPersonalities = {
-  1: {
-    label: "Ostrożny",
-    baseCheckChance: 0.24,
-    bluffChance: 0.02,
-    raiseRange: 2,
-  },
-
-  2: {
-    label: "Agresywny",
-    baseCheckChance: 0.12,
-    bluffChance: 0.09,
-    raiseRange: 4,
-  },
-
-  3: {
-    label: "Chaos",
-    baseCheckChance: 0.16,
-    bluffChance: 0.12,
-    raiseRange: 5,
-  },
-
-  4: {
-    label: "Cwaniak",
-    baseCheckChance: 0.24,
-    bluffChance: 0.04,
-    raiseRange: 3,
-  },
-};
-
-const handTypes5Cards = [
-  { name: "Wysoka karta", rank: 0 },
-  { name: "Para", rank: 1 },
-  { name: "Dwie pary", rank: 2 },
-  { name: "Trójka", rank: 3 },
-  { name: "Strit", rank: 4 },
-  { name: "Full", rank: 5 },
-  { name: "Kolor", rank: 6 },
-  { name: "Kareta", rank: 7 },
-  { name: "Poker", rank: 8 },
-];
-
-const handTypes6PlusCards = [
-  { name: "Wysoka karta", rank: 0 },
-  { name: "Para", rank: 1 },
-  { name: "Strit", rank: 2 },
-  { name: "Dwie pary", rank: 3 },
-  { name: "Trójka", rank: 4 },
-  { name: "Full", rank: 5 },
-  { name: "Kolor", rank: 6 },
-  { name: "Kareta", rank: 7 },
-  { name: "Poker", rank: 8 },
-];
-
-function cardPower(card) {
-  return cardLowToHigh.indexOf(card);
-}
+import {
+  cardPower,
+  getCardValue,
+  countValues,
+  hasStraight,
+  getRepeatedValue,
+  getAliveIndexes,
+  getStarterIndex,
+  getTotalCardsOnTable,
+  clamp,
+} from "./game/helpers";
 
 function getCurrentHandTypes(totalCardsOnTable) {
   if (totalCardsOnTable === 5) {
@@ -225,45 +171,8 @@ function getAllBidOptions(totalCardsOnTable = 5) {
     .sort((a, b) => a.power - b.power);
 }
 
-function getStarterIndex(preferredIndex, counts) {
-  const aliveIndexes = getAliveIndexes(counts);
 
-  if (aliveIndexes.length === 0) return -1;
 
-  if (preferredIndex !== null && counts[preferredIndex] < 5) {
-    return preferredIndex;
-  }
-
-  return aliveIndexes[0];
-}
-
-function getCardValue(card) {
-  return card.replace("♥", "").replace("♦", "").replace("♣", "").replace("♠", "");
-}
-
-function countValues(allCards) {
-  const counts = {};
-
-  allCards.forEach((card) => {
-    const value = getCardValue(card);
-    counts[value] = (counts[value] || 0) + 1;
-  });
-
-  return counts;
-}
-
-function hasStraight(values, straightCards) {
-  return straightCards.every((card) => values.includes(card));
-}
-
-function getRepeatedValue(group) {
-  if (group === "1010") return { value: "10", count: 2 };
-  if (group === "101010") return { value: "10", count: 3 };
-  if (group === "10101010") return { value: "10", count: 4 };
-
-  const value = group[0];
-  return { value, count: group.length };
-}
 
 function getMatchingCardIndexesForDeclaration(declaredCard, allCards) {
   if (!declaredCard) return [];
@@ -474,11 +383,6 @@ function createDeck(totalCardsOnTable = 5) {
   return deck.sort(() => Math.random() - 0.5);
 }
 
-function getAliveIndexes(counts) {
-  return counts
-    .map((count, index) => (count < 5 ? index : null))
-    .filter((index) => index !== null);
-}
 
 function dealCardsForCounts(counts) {
   const totalCardsOnTable = counts.reduce((sum, count) => {
@@ -506,19 +410,6 @@ function dealCardsForCounts(counts) {
   }
 
   return result;
-}
-
-function getTotalCardsOnTable(counts) {
-  return counts.reduce((sum, count) => {
-    if (count >= 5) return sum;
-    return sum + count;
-  }, 0);
-}
-
-
-
-function clamp(value, min, max) {
-  return Math.max(min, Math.min(max, value));
 }
 
 
