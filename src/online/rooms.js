@@ -120,3 +120,28 @@ export function listenToRoom(roomId, callback) {
     });
   });
 }
+
+export async function leaveRoom(roomId, playerName) {
+  if (!roomId || !playerName) return;
+
+  const roomRef = doc(db, "rooms", roomId);
+  const roomSnap = await getDoc(roomRef);
+
+  if (!roomSnap.exists()) return;
+
+  const room = roomSnap.data();
+  const players = room.players || [];
+
+  const updatedPlayers = players.filter(
+    (player) => player.name.toLowerCase() !== playerName.toLowerCase()
+  );
+
+  if (updatedPlayers.length === 0 || room.host === playerName) {
+    await deleteDoc(roomRef);
+    return;
+  }
+
+  await updateDoc(roomRef, {
+    players: updatedPlayers,
+  });
+}

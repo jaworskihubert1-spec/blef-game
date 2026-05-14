@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteRoom, listenToRoom } from "../online/rooms";
+import { leaveRoom, listenToRoom } from "../online/rooms";
 
 function OnlineRoom({ roomId, nick, onLeave }) {
   const [room, setRoom] = useState(null);
@@ -15,13 +15,10 @@ function OnlineRoom({ roomId, nick, onLeave }) {
     return () => unsubscribe();
   }, [roomId]);
 
-  async function handleLeave() {
-    if (room?.host === nick) {
-      await deleteRoom(roomId);
-    }
-
-    onLeave();
-  }
+ async function handleLeave() {
+  await leaveRoom(roomId, nick);
+  onLeave();
+}
 
   if (!room) {
     return (
