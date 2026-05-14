@@ -1,15 +1,17 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "TU_WKLEISZ",
-  authDomain: "TU_WKLEISZ",
-  projectId: "TU_WKLEISZ",
-  storageBucket: "TU_WKLEISZ",
-  messagingSenderId: "TU_WKLEISZ",
-  appId: "TU_WKLEISZ",
+  apiKey: "AIzaSyBWq0ezAgJUATGPZ9CRE3Pe9PDXFGTqCYo",
+  authDomain: "blef-game.firebaseapp.com",
+  projectId: "blef-game",
+  storageBucket: "blef-game.firebasestorage.app",
+  messagingSenderId: "995853894717",
+  appId: "1:995853894717:web:2cc3283d8da9bc254d1654"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-export const db = getFirestore(app);
