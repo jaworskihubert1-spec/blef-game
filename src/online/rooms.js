@@ -4,6 +4,7 @@ import {
   addDoc,
   getDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 
 import app from "../firebase";
@@ -39,3 +40,8 @@ export async function getRoom(roomId) {
   };
 }
 
+export async function deleteRoom(roomId) {
+  if (!roomId) return;
+
+  await deleteDoc(doc(db, "rooms", roomId));
+}
