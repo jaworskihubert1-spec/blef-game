@@ -20,6 +20,14 @@ function OnlineMenu({ onBack }) {
     setMessage(`Pokój utworzony. Kod: ${newRoomId}`);
   }
 
+  async function handleBack() {
+  if (roomId) {
+    await deleteRoom(roomId);
+  }
+
+  onBack();
+}
+
   return (
     <div className="rulesScreen">
       <h1>Gra online</h1>
@@ -53,12 +61,6 @@ function OnlineMenu({ onBack }) {
   );
 }
 
-async function handleBack() {
-  if (roomId) {
-    await deleteRoom(roomId);
-  }
 
-  onBack();
-}
 
 export default OnlineMenu;
