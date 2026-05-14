@@ -7,6 +7,8 @@ import {
   listenToRooms,
 } from "../online/rooms";
 
+import OnlineRoom from "./OnlineRoom";
+
 function OnlineMenu({ onBack }) {
   const [nick, setNick] = useState("");
   const [nickConfirmed, setNickConfirmed] = useState(false);
@@ -109,6 +111,19 @@ function OnlineMenu({ onBack }) {
       </div>
     );
   }
+
+  if (currentRoomId) {
+  return (
+    <OnlineRoom
+      roomId={currentRoomId}
+      nick={nick.trim()}
+      onLeave={() => {
+        setCurrentRoomId("");
+        setMessage("");
+      }}
+    />
+  );
+}
 
   return (
     <div className="rulesScreen">

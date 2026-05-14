@@ -106,3 +106,17 @@ export function listenToRooms(callback) {
     callback(rooms);
   });
 }
+
+export function listenToRoom(roomId, callback) {
+  return onSnapshot(doc(db, "rooms", roomId), (snapshot) => {
+    if (!snapshot.exists()) {
+      callback(null);
+      return;
+    }
+
+    callback({
+      id: snapshot.id,
+      ...snapshot.data(),
+    });
+  });
+}
