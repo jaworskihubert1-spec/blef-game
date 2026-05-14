@@ -36,6 +36,8 @@ import MainMenu from "./components/MainMenu";
 
 import RulesScreen from "./components/RulesScreen";
 
+import OnlineMenu from "./components/OnlineMenu";
+
 function App() {
   const [screen, setScreen] = useState("menu");
   const [history, setHistory] = useState([]);
@@ -1103,11 +1105,16 @@ setCardsWereChecked(false);
   <MainMenu
     onStartGame={startGame}
     onShowRules={() => setScreen("rules")}
+    onShowOnline={() => setScreen("online")}
   />
 )}
 
 {screen === "rules" && (
   <RulesScreen onBack={() => setScreen("menu")} />
+)}
+
+{screen === "online" && (
+  <OnlineMenu onBack={() => setScreen("menu")} />
 )}
 
       {screen === "game" && (
