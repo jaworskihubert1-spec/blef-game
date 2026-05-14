@@ -80,7 +80,6 @@ const [eliminatedPlayers, setEliminatedPlayers] = useState([]);
 const [cardsWereChecked, setCardsWereChecked] = useState(false);
 
 
-  const [screen, setScreen] = useState("menu");
 
 
 const [playerStats, setPlayerStats] = useState(
