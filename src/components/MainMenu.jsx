@@ -6,7 +6,7 @@ function MainMenu({ onStartGame, onShowRules, onShowOnline }) {
 
       <div className="menuButtons">
         <button onClick={onStartGame}>♠ Graj z botami</button>
-        <button onClick={onStartGame}>🌐 Online</button>
+        <button onClick={onShowOnline}>🌐 Online</button>
         <button onClick={onShowRules}>📖 Zasady</button>
         <button disabled>⚙ Ustawienia — wkrótce</button>
       </div>
