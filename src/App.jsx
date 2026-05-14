@@ -30,7 +30,7 @@ import {
   getMatchingCardIndexesForDeclaration,
 } from "./game/rules";
 
-
+import CardStack from "./components/CardStack";
 
 function App() {
   const [screen, setScreen] = useState("menu");
@@ -550,45 +550,7 @@ function chooseSmartBid({
   return bestOption;
 }
 
-function renderCard(card, localIndex = 0, globalIndex = 0) {
-  let suitClass = "cardBlack";
 
-  if (card.includes("♥")) suitClass = "cardRed";
-  if (card.includes("♦")) suitClass = "cardBlue";
-  if (card.includes("♣")) suitClass = "cardGreen";
-  if (card.includes("♠")) suitClass = "cardBlack";
-
-  const isHighlighted = highlightedCardIndexes.includes(globalIndex);
-
-  let resultClass = "";
-
-  if (cardsWereChecked) {
-    resultClass = isHighlighted ? "highlightedCard" : "dimmedCard";
-  }
-
-  return (
-    <span
-      key={`${card}-${globalIndex}`}
-      className={`gameCard ${suitClass} ${resultClass}`}
-      style={{
-        transform: `translateX(${localIndex * -10}px) rotate(${(localIndex - 1) * 3}deg)`,
-        zIndex: localIndex + 1,
-      }}
-    >
-      {card}
-    </span>
-  );
-}
-
-function renderCards(cardsArray, globalStartIndex = 0) {
-  return (
-    <div className="cardsStack">
-      {cardsArray.map((card, index) =>
-        renderCard(card, index, globalStartIndex + index)
-      )}
-    </div>
-  );
-}
 
 
 function startGame() {
