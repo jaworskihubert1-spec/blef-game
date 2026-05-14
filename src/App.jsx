@@ -875,13 +875,13 @@ function botMove(
   countsSnapshot,
 });
 
-    const isEarlyRound =
-  totalCardsOnTable <= 5 && bidPower < 20000;
+    const botIsStartingRound = !lastBidLabel || lastBidDeclarerIndex === null;
 
 const shouldCheck =
+  !botIsStartingRound &&
   lastBidLabel &&
-  !isEarlyRound &&
   (Math.random() < checkChance || possibleOptions.length === 0);
+    
     if (shouldCheck) {
       setMessage(`${botName} (${personality.label}) sprawdza.`);
       handleCheck(
@@ -903,16 +903,47 @@ const shouldCheck =
 });
 
     if (!finalOption) {
-      setMessage(`${botName} nie ma czym przebić. Sprawdza.`);
-      handleCheck(
-        botName,
-        lastBidLabel,
+  if (botIsStartingRound) {
+    const fallbackOption = possibleOptions[0];
+
+    addHistory(`${botName} (${personality.label}): ${fallbackOption.label}`);
+    recordBid(botIndex, fallbackOption, bidPower);
+
+    setDeclaredCard(fallbackOption.label);
+    setCurrentBidPower(fallbackOption.power);
+    setLastDeclarerIndex(botIndex);
+    setMessage(`${botName} (${personality.label}) deklaruje: ${fallbackOption.label}`);
+
+    const nextIndex = getNextAlivePlayerIndex(botIndex, countsSnapshot);
+
+    if (nextIndex === -1) return;
+
+    setCurrentPlayerIndex(nextIndex);
+    setCurrentTurn(players[nextIndex]);
+
+    if (nextIndex !== 0) {
+      botMove(
+        nextIndex,
+        fallbackOption.power,
+        fallbackOption.label,
         botIndex,
-        lastBidDeclarerIndex,
         countsSnapshot
       );
-      return;
     }
+
+    return;
+  }
+
+  setMessage(`${botName} nie ma czym przebić. Sprawdza.`);
+  handleCheck(
+    botName,
+    lastBidLabel,
+    botIndex,
+    lastBidDeclarerIndex,
+    countsSnapshot
+  );
+  return;
+}
 
     addHistory(`${botName} (${personality.label}): ${finalOption.label}`);
     recordBid(botIndex, finalOption, bidPower);
