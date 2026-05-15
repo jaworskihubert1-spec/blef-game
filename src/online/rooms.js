@@ -84,6 +84,8 @@ export async function deleteRoom(roomId) {
   await deleteDoc(doc(db, "rooms", roomId));
 }
 
+
+
 export async function joinRoom(roomId, playerName) {
   const roomRef = doc(db, "rooms", roomId);
   const roomSnap = await getDoc(roomRef);
