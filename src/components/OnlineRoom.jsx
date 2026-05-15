@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { leaveRoom, listenToRoom } from "../online/rooms";
+import { leaveRoom, listenToRoom, startRoomGame } from "../online/rooms";
 
 function OnlineRoom({ roomId, nick, onLeave }) {
   const [room, setRoom] = useState(null);
@@ -20,6 +20,8 @@ function OnlineRoom({ roomId, nick, onLeave }) {
   onLeave();
 }
 
+
+
   if (!room) {
     return (
       <div className="rulesScreen">
@@ -35,6 +37,48 @@ function OnlineRoom({ roomId, nick, onLeave }) {
   const maxPlayers = room.maxPlayers || 5;
   const slots = Array.from({ length: maxPlayers }, (_, index) => players[index] || null);
   const isHost = room.host === nick;
+
+  async function handleStartGame() {
+  if (!isHost) return;
+
+  await startRoomGame(roomId);
+}
+
+if (room.status === "playing") {
+  return (
+    <div className="onlineRoomScreen">
+      <h1>Gra startuje...</h1>
+
+      <p>
+        Pokój: <strong>{room.host}</strong>
+      </p>
+
+      <p>
+        Gracze: {players.length}/{maxPlayers}
+      </p>
+
+      <div className="onlineTableSlots">
+        {slots.map((player, index) => (
+          <div
+            key={index}
+            className={`onlineSlot ${player ? "taken" : "empty"}`}
+          >
+            {player ? (
+              <>
+                <strong>{player.name}</strong>
+                {player.name === room.host && <span>Host</span>}
+              </>
+            ) : (
+              <span className="plusSlot">+</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p>Za chwilę podłączymy tutaj właściwy widok gry online.</p>
+    </div>
+  );
+}
 
   return (
     <div className="onlineRoomScreen">
@@ -70,7 +114,7 @@ function OnlineRoom({ roomId, nick, onLeave }) {
         <button
           className="endTurn"
           disabled={players.length < 2}
-          onClick={() => setMessage("Start gry dodamy w następnym kroku.")}
+          onClick={handleStartGame}
         >
           Start gry
         </button>

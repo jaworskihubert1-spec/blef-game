@@ -46,6 +46,17 @@ export async function getRoom(roomId) {
   };
 }
 
+export async function startRoomGame(roomId) {
+  if (!roomId) return;
+
+  const roomRef = doc(db, "rooms", roomId);
+
+  await updateDoc(roomRef, {
+    status: "playing",
+    startedAt: Date.now(),
+  });
+}
+
 export async function deleteRoom(roomId) {
   if (!roomId) return;
 
