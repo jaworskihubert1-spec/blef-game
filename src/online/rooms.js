@@ -50,10 +50,31 @@ export async function startRoomGame(roomId) {
   if (!roomId) return;
 
   const roomRef = doc(db, "rooms", roomId);
+  const roomSnap = await getDoc(roomRef);
+
+  if (!roomSnap.exists()) return;
+
+  const room = roomSnap.data();
+  const players = room.players || [];
 
   await updateDoc(roomRef, {
     status: "playing",
     startedAt: Date.now(),
+    gameState: {
+      round: 1,
+      phase: "bidding",
+      players: players.map((player, index) => ({
+        id: index,
+        name: player.name,
+        cardsCount: 1,
+        eliminated: false,
+      })),
+      currentPlayerIndex: 0,
+      declaredCard: "",
+      currentBidPower: -1,
+      lastDeclarerIndex: null,
+      history: ["Gra rozpoczęta"],
+    },
   });
 }
 
