@@ -1070,3 +1070,50 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
+
+.onlinePlayersRow {
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: min(92vw, 760px);
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.onlinePlayerPanel {
+  min-height: 82px;
+  padding: 10px;
+
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  text-align: center;
+}
+
+.onlinePlayerPanel strong {
+  font-size: 14px;
+}
+
+.onlinePlayerPanel span,
+.onlinePlayerPanel em {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+@media (max-width: 700px) {
+  .onlinePlayersRow {
+    top: 12%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
