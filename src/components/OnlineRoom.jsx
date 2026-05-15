@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { leaveRoom, listenToRoom, startRoomGame } from "../online/rooms";
+import OnlineGame from "./OnlineGame";
 
 function OnlineRoom({ roomId, nick, onLeave }) {
   const [room, setRoom] = useState(null);
@@ -45,39 +46,7 @@ function OnlineRoom({ roomId, nick, onLeave }) {
 }
 
 if (room.status === "playing") {
-  return (
-    <div className="onlineRoomScreen">
-      <h1>Gra startuje...</h1>
-
-      <p>
-        Pokój: <strong>{room.host}</strong>
-      </p>
-
-      <p>
-        Gracze: {players.length}/{maxPlayers}
-      </p>
-
-      <div className="onlineTableSlots">
-        {slots.map((player, index) => (
-          <div
-            key={index}
-            className={`onlineSlot ${player ? "taken" : "empty"}`}
-          >
-            {player ? (
-              <>
-                <strong>{player.name}</strong>
-                {player.name === room.host && <span>Host</span>}
-              </>
-            ) : (
-              <span className="plusSlot">+</span>
-            )}
-          </div>
-        ))}
-      </div>
-
-      <p>Za chwilę podłączymy tutaj właściwy widok gry online.</p>
-    </div>
-  );
+  return <OnlineGame room={room} nick={nick} />;
 }
 
   return (
