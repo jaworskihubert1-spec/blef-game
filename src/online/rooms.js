@@ -16,6 +16,8 @@ import app from "../firebase";
 
 import { dealCardsForCounts } from "../game/deck";
 
+import { checkDeclaration } from "../game/rules";
+
 const db = getFirestore(app);
 
 export async function createRoom(hostName) {
@@ -220,6 +222,114 @@ export async function makeOnlineBid(roomId, playerName, bid) {
       currentPlayerIndex: nextPlayerIndex,
       history: [
         `${playerName}: ${bid.label}`,
+        ...(gameState.history || []),
+      ],
+    },
+  });
+}
+
+export async function makeOnlineCheck(roomId, checkerName) {
+  if (!roomId || !checkerName) return;
+
+  const roomRef = doc(db, "rooms", roomId);
+  const roomSnap = await getDoc(roomRef);
+
+  if (!roomSnap.exists()) return;
+
+  const room = roomSnap.data();
+  const gameState = room.gameState;
+
+  if (!gameState) return;
+
+  const players = gameState.players || [];
+  const checker = players[gameState.currentPlayerIndex];
+
+  if (!checker || checker.name !== checkerName) {
+    throw new Error("To nie jest twoja tura.");
+  }
+
+  if (!gameState.declaredCard) {
+    throw new Error("Nie ma deklaracji do sprawdzenia.");
+  }
+
+  const declarer = players[gameState.lastDeclarerIndex];
+
+  if (!declarer) {
+    throw new Error("Brak deklarującego.");
+  }
+
+  const allCards = players
+    .filter((player) => !player.eliminated)
+    .flatMap((player) => player.hand || []);
+
+  const isBluff = !checkDeclaration(gameState.declaredCard, allCards);
+
+  const loserIndex = isBluff ? declarer.id : checker.id;
+  const winnerIndex = isBluff ? checker.id : declarer.id;
+
+  const updatedPlayers = players.map((player) => {
+    if (player.id !== loserIndex) return player;
+
+    const newCardsCount = Math.min((player.cardsCount || 1) + 1, 5);
+
+    return {
+      ...player,
+      cardsCount: newCardsCount,
+      eliminated: newCardsCount >= 5,
+    };
+  });
+
+  const alivePlayers = updatedPlayers.filter((player) => !player.eliminated);
+
+  if (alivePlayers.length <= 1) {
+    await updateDoc(roomRef, {
+      gameState: {
+        ...gameState,
+        phase: "finished",
+        players: updatedPlayers,
+        winnerName: alivePlayers[0]?.name || "",
+        history: [
+          `Wynik: ${isBluff ? "BLEF" : "PRAWDA"}`,
+          `${updatedPlayers[loserIndex]?.name} dostaje kartę karną`,
+          `${alivePlayers[0]?.name || "Brak"} wygrywa grę`,
+          ...(gameState.history || []),
+        ],
+      },
+    });
+
+    return;
+  }
+
+  const starterIndex =
+    !updatedPlayers[loserIndex].eliminated ? loserIndex : winnerIndex;
+
+  const counts = updatedPlayers.map((player) =>
+    player.eliminated ? 5 : player.cardsCount
+  );
+
+  const dealt = dealCardsForCounts(counts);
+  const allHands = [dealt.player, ...dealt.bots];
+
+  const playersWithNewHands = updatedPlayers.map((player, index) => ({
+    ...player,
+    hand: player.eliminated ? [] : allHands[index] || [],
+  }));
+
+  await updateDoc(roomRef, {
+    gameState: {
+      ...gameState,
+      round: gameState.round + 1,
+      phase: "bidding",
+      players: playersWithNewHands,
+      currentPlayerIndex: starterIndex,
+      declaredCard: "",
+      currentBidPower: -1,
+      lastDeclarerIndex: null,
+      history: [
+        `${checkerName}: Sprawdzam`,
+        `Wynik: ${isBluff ? "BLEF" : "PRAWDA"}`,
+        `${updatedPlayers[loserIndex]?.name} dostaje kartę karną`,
+        "— Nowa runda —",
         ...(gameState.history || []),
       ],
     },

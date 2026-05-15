@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getAllBidOptions } from "../game/bids";
-import { makeOnlineBid } from "../online/rooms";
+import { makeOnlineBid, makeOnlineCheck } from "../online/rooms";
 
 function OnlineGame({ room, nick }) {
     const [selectedBidPower, setSelectedBidPower] = useState("");
@@ -51,6 +51,37 @@ async function handleOnlineBid() {
   } catch (error) {
     setMessage(error.message || "Nie udało się wykonać ruchu.");
   }
+}
+
+async function handleOnlineCheck() {
+  try {
+    await makeOnlineCheck(room.id, nick);
+    setSelectedBidPower("");
+    setMessage("");
+  } catch (error) {
+    setMessage(error.message || "Nie udało się sprawdzić.");
+  }
+}
+
+if (gameState.phase === "finished") {
+  return (
+    <div className="onlineRoomScreen">
+      <h1>Koniec gry</h1>
+
+      <div className="winnerBox">
+        🏆 Wygrał: {gameState.winnerName}
+      </div>
+
+      <div className="resultsList">
+        {players.map((player) => (
+          <div key={player.id} className="resultRow">
+            <strong>{player.name}</strong>
+            <em>{player.cardsCount} kart</em>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 return (
@@ -132,7 +163,12 @@ return (
 {message && <p>{message}</p>}
 
 
-    <button disabled={!isMyTurn || !gameState.declaredCard}>Sprawdzam</button>
+    <button
+  disabled={!isMyTurn || !gameState.declaredCard}
+  onClick={handleOnlineCheck}
+>
+  Sprawdzam
+</button>
     <button disabled={!isMyTurn} className="endTurn">
       Zakończ turę
     </button>
