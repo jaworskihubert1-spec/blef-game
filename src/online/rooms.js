@@ -187,3 +187,41 @@ export async function leaveRoom(roomId, playerName) {
     players: updatedPlayers,
   });
 }
+
+export async function makeOnlineBid(roomId, playerName, bid) {
+  if (!roomId || !playerName || !bid) return;
+
+  const roomRef = doc(db, "rooms", roomId);
+  const roomSnap = await getDoc(roomRef);
+
+  if (!roomSnap.exists()) return;
+
+  const room = roomSnap.data();
+  const gameState = room.gameState;
+
+  if (!gameState) return;
+
+  const players = gameState.players || [];
+  const currentPlayer = players[gameState.currentPlayerIndex];
+
+  if (!currentPlayer || currentPlayer.name !== playerName) {
+    throw new Error("To nie jest twoja tura.");
+  }
+
+  const nextPlayerIndex =
+    (gameState.currentPlayerIndex + 1) % players.length;
+
+  await updateDoc(roomRef, {
+    gameState: {
+      ...gameState,
+      declaredCard: bid.label,
+      currentBidPower: bid.power,
+      lastDeclarerIndex: currentPlayer.id,
+      currentPlayerIndex: nextPlayerIndex,
+      history: [
+        `${playerName}: ${bid.label}`,
+        ...(gameState.history || []),
+      ],
+    },
+  });
+}

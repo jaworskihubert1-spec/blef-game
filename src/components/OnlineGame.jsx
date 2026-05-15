@@ -1,4 +1,10 @@
+import { useState } from "react";
+import { getAllBidOptions } from "../game/bids";
+import { makeOnlineBid } from "../online/rooms";
+
 function OnlineGame({ room, nick }) {
+    const [selectedBidPower, setSelectedBidPower] = useState("");
+const [message, setMessage] = useState("");
   const gameState = room.gameState;
 
   if (!gameState) {
@@ -13,6 +19,39 @@ function OnlineGame({ room, nick }) {
   const currentPlayer = players[gameState.currentPlayerIndex];
   const myPlayer = players.find((player) => player.name === nick);
   const isMyTurn = myPlayer?.id === gameState.currentPlayerIndex;
+
+  const totalCardsOnTable = players.reduce(
+  (sum, player) => sum + (player.eliminated ? 0 : player.cardsCount),
+  0
+);
+
+const bidOptions = getAllBidOptions(totalCardsOnTable).filter(
+  (option) => option.power > gameState.currentBidPower
+);
+
+async function handleOnlineBid() {
+  if (!selectedBidPower) {
+    setMessage("Najpierw wybierz deklarację.");
+    return;
+  }
+
+  const selectedBid = bidOptions.find(
+    (option) => String(option.power) === selectedBidPower
+  );
+
+  if (!selectedBid) {
+    setMessage("Nieprawidłowa deklaracja.");
+    return;
+  }
+
+  try {
+    await makeOnlineBid(room.id, nick, selectedBid);
+    setSelectedBidPower("");
+    setMessage("");
+  } catch (error) {
+    setMessage(error.message || "Nie udało się wykonać ruchu.");
+  }
+}
 
 return (
   <div className="table">
@@ -72,7 +111,27 @@ return (
   </div>
 
   <div className="buttons">
-    <button disabled={!isMyTurn}>Podbij</button>
+    <select
+  disabled={!isMyTurn}
+  value={selectedBidPower}
+  onChange={(e) => setSelectedBidPower(e.target.value)}
+>
+  <option value="">Wybierz deklarację</option>
+
+  {bidOptions.map((option) => (
+    <option key={`${option.label}-${option.power}`} value={option.power}>
+      {option.label}
+    </option>
+  ))}
+</select>
+
+<button disabled={!isMyTurn || !selectedBidPower} onClick={handleOnlineBid}>
+  Podbij
+</button>
+
+{message && <p>{message}</p>}
+
+
     <button disabled={!isMyTurn || !gameState.declaredCard}>Sprawdzam</button>
     <button disabled={!isMyTurn} className="endTurn">
       Zakończ turę
