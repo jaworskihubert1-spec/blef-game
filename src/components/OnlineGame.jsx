@@ -12,6 +12,7 @@ function OnlineGame({ room, nick }) {
   const players = gameState.players || [];
   const currentPlayer = players[gameState.currentPlayerIndex];
   const myPlayer = players.find((player) => player.name === nick);
+  const isMyTurn = myPlayer?.id === gameState.currentPlayerIndex;
 
 return (
   <div className="table">
@@ -55,17 +56,29 @@ return (
     </div>
 
     <div className="you activeTurnPlayer">
-      <p>Twoja karta</p>
-      <p>Karty: {myPlayer?.cardsCount || 0}</p>
+  <p>Twoja karta</p>
+  <p>Karty: {myPlayer?.cardsCount || 0}</p>
 
-      <div className="buttons">
-        <button disabled>Podbij</button>
-        <button disabled>Sprawdzam</button>
-        <button disabled className="endTurn">
-          Zakończ turę
-        </button>
-      </div>
-    </div>
+  <div className="playerCards">
+    {myPlayer?.hand?.length ? (
+      myPlayer.hand.map((card) => (
+        <span key={card} className="gameCard">
+          {card}
+        </span>
+      ))
+    ) : (
+      <span>Brak kart</span>
+    )}
+  </div>
+
+  <div className="buttons">
+    <button disabled={!isMyTurn}>Podbij</button>
+    <button disabled={!isMyTurn || !gameState.declaredCard}>Sprawdzam</button>
+    <button disabled={!isMyTurn} className="endTurn">
+      Zakończ turę
+    </button>
+  </div>
+</div>
   </div>
 );
 }

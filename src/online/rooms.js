@@ -14,6 +14,8 @@ import {
 
 import app from "../firebase";
 
+import { dealCardsForCounts } from "../game/deck";
+
 const db = getFirestore(app);
 
 export async function createRoom(hostName) {
@@ -55,7 +57,12 @@ export async function startRoomGame(roomId) {
   if (!roomSnap.exists()) return;
 
   const room = roomSnap.data();
-  const players = room.players || [];
+  const roomPlayers = room.players || [];
+
+  const counts = roomPlayers.map(() => 1);
+  const dealt = dealCardsForCounts(counts);
+
+  const allHands = [dealt.player, ...dealt.bots];
 
   await updateDoc(roomRef, {
     status: "playing",
@@ -63,17 +70,18 @@ export async function startRoomGame(roomId) {
     gameState: {
       round: 1,
       phase: "bidding",
-      players: players.map((player, index) => ({
+      players: roomPlayers.map((player, index) => ({
         id: index,
         name: player.name,
         cardsCount: 1,
+        hand: allHands[index] || [],
         eliminated: false,
       })),
       currentPlayerIndex: 0,
       declaredCard: "",
       currentBidPower: -1,
       lastDeclarerIndex: null,
-      history: ["Gra rozpoczęta"],
+      history: ["Gra rozpoczęta", "Rozdano karty"],
     },
   });
 }
