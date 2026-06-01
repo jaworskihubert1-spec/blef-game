@@ -169,14 +169,14 @@ return (
     </div>
 
     <div className="onlineHistory">
-      <h3>Historia</h3>
+  <h3>Historia</h3>
 
-      {gameState.history?.slice(0, 6).map((item, index) => (
-        <div key={index} className="historyItem">
-          {item}
-        </div>
-      ))}
+  {gameState.history?.map((item, index) => (
+    <div key={index} className="historyItem">
+      {item}
     </div>
+  ))}
+</div>
   </div>
 );
 }

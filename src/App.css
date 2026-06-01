@@ -1270,43 +1270,53 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     margin: 12px auto;
   }
 
-  .onlineHistory {
-    display: block !important;
-    width: calc(100% - 24px);
-    max-width: 430px;
-    height: 118px;
-    max-height: 118px;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    margin: 8px auto 12px;
-    padding: 10px 14px;
-    border-radius: 18px;
-    background: linear-gradient(
-      180deg,
-      rgba(13, 32, 25, 0.95),
-      rgba(5, 12, 10, 0.93)
-    );
-    border: 1px solid rgba(255, 220, 130, 0.22);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-  }
+.onlineHistory {
+  display: block !important;
+  width: min(92vw, 430px) !important;
+  height: 130px !important;
+  max-height: 130px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 
-  .onlineHistory h3 {
-    position: sticky;
-    top: 0;
-    margin: -10px -14px 8px;
-    padding: 9px 14px;
-    background: rgba(5, 12, 10, 0.98);
-    border-bottom: 1px solid rgba(255, 220, 130, 0.16);
-    z-index: 2;
-  }
+  margin: 12px auto 180px !important;
+  padding: 12px 14px !important;
 
-  .onlineHistory .historyItem {
-    padding: 6px 0;
-    font-size: 12px;
-    line-height: 1.25;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  }
+  border-radius: 20px !important;
+  background: rgba(5, 12, 10, 0.92) !important;
+  border: 1px solid rgba(255, 220, 130, 0.35) !important;
+
+  box-shadow:
+    inset 0 0 18px rgba(255, 220, 130, 0.06),
+    0 10px 30px rgba(0, 0, 0, 0.45) !important;
+
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.onlineHistory h3 {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  margin: -12px -14px 8px !important;
+  padding: 10px 14px !important;
+
+  background: rgba(5, 12, 10, 0.98) !important;
+  border-bottom: 1px solid rgba(255, 220, 130, 0.2) !important;
+
+  color: #f0b84d !important;
+  font-size: 14px !important;
+  letter-spacing: 1px;
+}
+
+.onlineHistory .historyItem {
+  display: block !important;
+  padding: 6px 0 !important;
+  font-size: 12px !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
 
   .onlineActionPanel {
     position: fixed;
