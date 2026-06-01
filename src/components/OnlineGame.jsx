@@ -3,8 +3,6 @@ import { getAllBidOptions } from "../game/bids";
 import { makeOnlineBid, makeOnlineCheck } from "../online/rooms";
 
 function OnlineGame({ room, nick }) {
-
-  const [showHistory, setShowHistory] = useState(false);
     const [selectedBidPower, setSelectedBidPower] = useState("");
 const [message, setMessage] = useState("");
   const gameState = room.gameState;
@@ -170,24 +168,15 @@ return (
       {message && <p className="onlineMessage">{message}</p>}
     </div>
 
-    <button
-  className="historyToggle"
-  onClick={() => setShowHistory(!showHistory)}
->
-  📜 Historia ({gameState.history?.length || 0})
-</button>
+    <div className="onlineHistory">
+      <h3>Historia</h3>
 
-{showHistory && (
-  <div className="onlineHistory">
-    <h3>Historia</h3>
-
-    {gameState.history?.map((item, index) => (
-      <div key={index} className="historyItem">
-        {item}
-      </div>
-    ))}
-  </div>
-)}
+      {gameState.history?.slice(0, 6).map((item, index) => (
+        <div key={index} className="historyItem">
+          {item}
+        </div>
+      ))}
+    </div>
   </div>
 );
 }
