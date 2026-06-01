@@ -1254,21 +1254,7 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     right: auto;
     transform: translateX(-50%);
   }
-
-@media (max-width: 759px) {
-  .onlineGameTable {
-    height: 100svh;
-    min-height: 100svh;
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    padding: 10px;
-    padding-bottom: 210px;
-  }
-
-  .onlineCenterTable {
-    min-height: 135px;
-    margin: 12px auto;
-  }
+}
 
 .onlineHistory {
   display: block !important;
@@ -1318,6 +1304,21 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+@media (max-width: 759px) {
+  .onlineGameTable {
+    height: 100svh;
+    min-height: 100svh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 10px;
+    padding-bottom: 210px;
+  }
+
+  .onlineCenterTable {
+    min-height: 135px;
+    margin: 12px auto;
+  }
+
   .onlineActionPanel {
     position: fixed;
     left: 12px;
@@ -1327,4 +1328,17 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     z-index: 20;
   }
 }
+
+@media (min-width: 760px) {
+  .onlineHistory {
+    position: fixed;
+    left: 14px;
+    top: 74px;
+
+    width: 240px !important;
+    max-height: 55vh !important;
+    height: auto !important;
+
+    margin: 0 !important;
+  }
 }
