@@ -1255,78 +1255,66 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     transform: translateX(-50%);
   }
 
-.onlineHistory {
-  display: block !important;
+@media (max-width: 759px) {
+  .onlineGameTable {
+    height: 100svh;
+    min-height: 100svh;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 10px;
+    padding-bottom: 210px;
+  }
 
-  width: calc(100% - 24px);
-  max-width: 430px;
-  max-height: 145px;
+  .onlineCenterTable {
+    min-height: 135px;
+    margin: 12px auto;
+  }
 
-  overflow-y: scroll !important;
-  overflow-x: hidden;
-
-  touch-action: pan-y;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-
-  margin: 10px auto 190px;
-  padding: 12px 14px;
-
-  border-radius: 20px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(13, 32, 25, 0.94),
-    rgba(5, 12, 10, 0.92)
-  );
-
-  border: 1px solid rgba(255, 220, 130, 0.22);
-
-  box-shadow:
-    inset 0 0 18px rgba(255, 220, 130, 0.05),
-    0 10px 28px rgba(0, 0, 0, 0.35);
-
-  backdrop-filter: blur(8px);
-}
-
-.onlineHistory h3 {
-  position: sticky;
-  top: 0;
-
-  margin: -12px -14px 8px;
-  padding: 10px 14px;
-
-  font-size: 13px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-
-  background: rgba(5, 12, 10, 0.96);
-  border-bottom: 1px solid rgba(255, 220, 130, 0.16);
-}
-
-.onlineHistory .historyItem {
-  padding: 6px 0;
-  font-size: 12px;
-  line-height: 1.25;
-
-  color: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-}
-
-.onlineHistory .historyItem:last-child {
-  border-bottom: none;
-}
-
-@media (min-width: 760px) {
   .onlineHistory {
+    display: block !important;
+    width: calc(100% - 24px);
+    max-width: 430px;
+    height: 118px;
+    max-height: 118px;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    margin: 8px auto 12px;
+    padding: 10px 14px;
+    border-radius: 18px;
+    background: linear-gradient(
+      180deg,
+      rgba(13, 32, 25, 0.95),
+      rgba(5, 12, 10, 0.93)
+    );
+    border: 1px solid rgba(255, 220, 130, 0.22);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .onlineHistory h3 {
+    position: sticky;
+    top: 0;
+    margin: -10px -14px 8px;
+    padding: 9px 14px;
+    background: rgba(5, 12, 10, 0.98);
+    border-bottom: 1px solid rgba(255, 220, 130, 0.16);
+    z-index: 2;
+  }
+
+  .onlineHistory .historyItem {
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.25;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .onlineActionPanel {
     position: fixed;
-    left: 14px;
-    top: 74px;
-
-    width: 240px;
-    max-height: 55vh;
-
-    margin: 0;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    max-height: 300px;
+    z-index: 20;
   }
 }
 }
