@@ -1241,9 +1241,6 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
   opacity: 0.9;
 }
 
-.onlineHistory {
-  display: none;
-}
 
 @media (min-width: 760px) {
   .onlinePlayersGrid {
