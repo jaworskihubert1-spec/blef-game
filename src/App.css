@@ -1117,3 +1117,156 @@ button:not(.endTurn):not(.resetBtn):not(.back)::before {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.onlineGameTable {
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  padding: 14px;
+  color: white;
+  background:
+    radial-gradient(circle at center, rgba(32, 120, 70, 0.9), rgba(8, 28, 22, 1) 72%);
+}
+
+.onlineTopBar {
+  height: 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.onlinePlayersGrid {
+  margin: 14px auto 0;
+  width: 100%;
+  max-width: 720px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.onlineSeat {
+  min-height: 72px;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.onlineSeat strong {
+  font-size: 14px;
+}
+
+.onlineSeat span,
+.onlineSeat em {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.currentSeat {
+  box-shadow: 0 0 0 2px rgba(255, 225, 120, 0.9), 0 0 24px rgba(255, 225, 120, 0.45);
+}
+
+.mySeat {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.onlineCenterTable {
+  width: min(88vw, 420px);
+  min-height: 150px;
+  margin: 18px auto;
+  padding: 18px;
+  border-radius: 32px;
+  text-align: center;
+  background:
+    radial-gradient(circle, rgba(42, 130, 75, 0.95), rgba(12, 58, 38, 0.96));
+  border: 3px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.35), 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.onlineCenterTable h3 {
+  margin: 0 0 10px;
+  letter-spacing: 2px;
+}
+
+.onlineActionPanel {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  padding: 14px;
+  border-radius: 24px;
+  background: rgba(10, 15, 18, 0.88);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.onlineHand p {
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.onlineControls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.onlineControls select {
+  grid-column: 1 / -1;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+}
+
+.onlineControls button {
+  padding: 12px;
+  border-radius: 14px;
+}
+
+.onlineMessage {
+  margin: 0;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.onlineHistory {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .onlinePlayersGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .onlineActionPanel {
+    width: min(620px, 92vw);
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .onlineHistory {
+    display: block;
+    position: fixed;
+    left: 14px;
+    top: 74px;
+    width: 230px;
+    max-height: 55vh;
+    overflow: auto;
+    padding: 12px;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
