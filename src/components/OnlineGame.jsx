@@ -2,11 +2,13 @@ import { useState } from "react";
 import { getAllBidOptions } from "../game/bids";
 import { makeOnlineBid, makeOnlineCheck } from "../online/rooms";
 
-const [showFullHistory, setShowFullHistory] = useState(false);
+
 
 function OnlineGame({ room, nick }) {
     const [selectedBidPower, setSelectedBidPower] = useState("");
 const [message, setMessage] = useState("");
+const [showFullHistory, setShowFullHistory] = useState(false);
+
   const gameState = room.gameState;
 
   if (!gameState) {
