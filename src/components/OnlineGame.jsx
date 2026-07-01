@@ -2,6 +2,8 @@ import { useState } from "react";
 import { getAllBidOptions } from "../game/bids";
 import { makeOnlineBid, makeOnlineCheck } from "../online/rooms";
 
+const [showFullHistory, setShowFullHistory] = useState(false);
+
 function OnlineGame({ room, nick }) {
     const [selectedBidPower, setSelectedBidPower] = useState("");
 const [message, setMessage] = useState("");
@@ -169,14 +171,47 @@ return (
     </div>
 
     <div className="onlineHistory">
-  <h3>Historia</h3>
+  <div className="onlineHistoryHeader">
+    <h3>Historia</h3>
 
-  {gameState.history?.map((item, index) => (
-    <div key={index} className="historyItem">
-      {item}
-    </div>
-  ))}
+    <button
+      className="historyOpenBtn"
+      onClick={() => setShowFullHistory(true)}
+    >
+      ⛶
+    </button>
+  </div>
+
+  <div className="onlineHistoryList">
+    {gameState.history?.slice(0, 4).map((item, index) => (
+      <div key={index} className="historyItem">
+        {item}
+      </div>
+    ))}
+  </div>
 </div>
+
+{showFullHistory && (
+  <div className="historyModalOverlay">
+    <div className="historyModal">
+      <div className="historyModalHeader">
+        <h2>Pełna historia</h2>
+
+        <button onClick={() => setShowFullHistory(false)}>
+          Zamknij
+        </button>
+      </div>
+
+      <div className="historyModalList">
+        {gameState.history?.map((item, index) => (
+          <div key={index} className="historyModalItem">
+            {item}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
   </div>
 );
 }
