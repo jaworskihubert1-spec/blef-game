@@ -15,6 +15,7 @@ const [showFullHistory, setShowFullHistory] = useState(false);
 const [showBidModal, setShowBidModal] = useState(false);
 const [selectedHandType, setSelectedHandType] = useState(null);
 const [pendingBid, setPendingBid] = useState(null);
+const [selectedAction, setSelectedAction] = useState(null);
 
   const gameState = room.gameState;
 
@@ -46,7 +47,7 @@ function chooseOnlineBid(option, handName) {
     handName,
   });
 
-  
+  setSelectedAction("bid");
   setSelectedHandType(null);
   setShowBidModal(false);
 }
@@ -58,12 +59,12 @@ async function handleOnlineBid() {
   }
 
   try {
-    await makeOnlineBid(room.id, nick, pendingBid);
+await makeOnlineBid(room.id, nick, pendingBid);
 
-    setPendingBid(null);
-    
-    setShowBidModal(false);
-    setMessage("");
+setPendingBid(null);
+setSelectedAction(null);
+setShowBidModal(false);
+setMessage("");
   } catch (error) {
     setMessage(error.message || "Nie udało się wykonać ruchu.");
   }
@@ -71,9 +72,11 @@ async function handleOnlineBid() {
 
 async function handleOnlineCheck() {
   try {
-    await makeOnlineCheck(room.id, nick);
-    
-    setMessage("");
+await makeOnlineCheck(room.id, nick);
+
+setPendingBid(null);
+setSelectedAction(null);
+setMessage("");
   } catch (error) {
     setMessage(error.message || "Nie udało się sprawdzić.");
   }
@@ -164,13 +167,42 @@ return (
 </button>
 
         <button
-          disabled={!isMyTurn || !gameState.declaredCard}
-          onClick={handleOnlineCheck}
-        >
-          Sprawdzam
-        </button>
-      </div>
+  disabled={!isMyTurn || !gameState.declaredCard}
+  onClick={() => {
+    setSelectedAction("check");
+    setPendingBid(null);
+    setMessage("Wybrano: Sprawdzam. Kliknij „Zakończ turę”.");
+  }}
+>
+  Sprawdzam
+</button>
 
+<button
+  className="endTurn"
+  disabled={!isMyTurn || !selectedAction}
+  onClick={async () => {
+    if (selectedAction === "bid") {
+      await handleOnlineBid();
+    }
+
+    if (selectedAction === "check") {
+      await handleOnlineCheck();
+    }
+
+    setSelectedAction(null);
+  }}
+>
+  Zakończ turę
+</button>
+
+<p className="onlineSelectedAction">
+  Wybrane:{" "}
+  <strong>
+    {pendingBid?.label || (selectedAction === "check" ? "Sprawdzam" : "brak")}
+  </strong>
+</p>
+
+      </div>
       {message && <p className="onlineMessage">{message}</p>}
     </div>
 
@@ -301,12 +333,15 @@ return (
         </button>
 
         <button
-          className="bidConfirmBtn"
-          disabled={!pendingBid}
-          onClick={handleOnlineBid}
-        >
-          Zatwierdź
-        </button>
+  className="bidConfirmBtn"
+  disabled={!pendingBid}
+  onClick={() => {
+    setShowBidModal(false);
+    setMessage("Wybrano deklarację. Kliknij „Zakończ turę”.");
+  }}
+>
+  Zatwierdź
+</button>
       </div>
     </div>
   </div>
