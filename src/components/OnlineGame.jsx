@@ -1,13 +1,20 @@
 import { useState } from "react";
-import { getAllBidOptions } from "../game/bids";
+import {
+  getAllBidOptions,
+  getCurrentHandTypes,
+  generateBidOptions,
+  getActiveCardValues,
+} from "../game/bids";
 import { makeOnlineBid, makeOnlineCheck } from "../online/rooms";
 
 
 
 function OnlineGame({ room, nick }) {
-    const [selectedBidPower, setSelectedBidPower] = useState("");
 const [message, setMessage] = useState("");
 const [showFullHistory, setShowFullHistory] = useState(false);
+const [showBidModal, setShowBidModal] = useState(false);
+const [selectedHandType, setSelectedHandType] = useState(null);
+const [pendingBid, setPendingBid] = useState(null);
 
   const gameState = room.gameState;
 
@@ -33,24 +40,29 @@ const bidOptions = getAllBidOptions(totalCardsOnTable).filter(
   (option) => option.power > gameState.currentBidPower
 );
 
+function chooseOnlineBid(option, handName) {
+  setPendingBid({
+    ...option,
+    handName,
+  });
+
+  
+  setSelectedHandType(null);
+  setShowBidModal(false);
+}
+
 async function handleOnlineBid() {
-  if (!selectedBidPower) {
+  if (!pendingBid) {
     setMessage("Najpierw wybierz deklarację.");
     return;
   }
 
-  const selectedBid = bidOptions.find(
-    (option) => String(option.power) === selectedBidPower
-  );
-
-  if (!selectedBid) {
-    setMessage("Nieprawidłowa deklaracja.");
-    return;
-  }
-
   try {
-    await makeOnlineBid(room.id, nick, selectedBid);
-    setSelectedBidPower("");
+    await makeOnlineBid(room.id, nick, pendingBid);
+
+    setPendingBid(null);
+    
+    setShowBidModal(false);
     setMessage("");
   } catch (error) {
     setMessage(error.message || "Nie udało się wykonać ruchu.");
@@ -60,7 +72,7 @@ async function handleOnlineBid() {
 async function handleOnlineCheck() {
   try {
     await makeOnlineCheck(room.id, nick);
-    setSelectedBidPower("");
+    
     setMessage("");
   } catch (error) {
     setMessage(error.message || "Nie udało się sprawdzić.");
@@ -143,23 +155,13 @@ return (
       </div>
 
       <div className="onlineControls">
-        <select
-          disabled={!isMyTurn}
-          value={selectedBidPower}
-          onChange={(e) => setSelectedBidPower(e.target.value)}
-        >
-          <option value="">Wybierz deklarację</option>
 
-          {bidOptions.map((option) => (
-            <option key={`${option.label}-${option.power}`} value={option.power}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-
-        <button disabled={!isMyTurn || !selectedBidPower} onClick={handleOnlineBid}>
-          Podbij
-        </button>
+        <button
+  disabled={!isMyTurn}
+  onClick={() => setShowBidModal(true)}
+>
+  {pendingBid ? `Podbij: ${pendingBid.label}` : "Podbij"}
+</button>
 
         <button
           disabled={!isMyTurn || !gameState.declaredCard}
@@ -192,6 +194,123 @@ return (
     ))}
   </div>
 </div>
+
+{showBidModal && (
+  <div className="bidSheetOverlay">
+    <div className="bidSheet">
+      <div className="bidHeader">
+        <h2>PODBIJ</h2>
+        <p>
+          Aktualna deklaracja:{" "}
+          <strong>{gameState.declaredCard || "brak"}</strong>
+        </p>
+        <span>Musisz przebić wyżej</span>
+      </div>
+
+      {!selectedHandType ? (
+        <div className="bidTypeGrid">
+          {getCurrentHandTypes(totalCardsOnTable).map((type) => {
+            const options = generateBidOptions(type, totalCardsOnTable);
+            const availableOptions = options.filter(
+              (option) => option.power > gameState.currentBidPower
+            );
+
+            const disabled = availableOptions.length === 0;
+            const selected = pendingBid?.handName === type.name;
+
+            return (
+              <button
+                key={type.name}
+                className={[
+                  "bidTypeCard",
+                  disabled ? "disabled" : "",
+                  selected ? "selected" : "",
+                ].join(" ")}
+                disabled={disabled}
+                onClick={() => setSelectedHandType(type)}
+              >
+                <span>{type.name}</span>
+                <small>
+                  {disabled ? "niedostępne" : `od ${availableOptions[0].label}`}
+                </small>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        <>
+          <div className="bidSubHeader">
+            <h3>{selectedHandType.name}</h3>
+
+            <button
+              className="smallBackBtn"
+              onClick={() => setSelectedHandType(null)}
+            >
+              Wróć do układów
+            </button>
+          </div>
+
+          <div
+            className={`bidOptionsGrid ${
+              selectedHandType.name === "Dwie pary" ||
+              selectedHandType.name === "Full" ||
+              selectedHandType.name === "Poker"
+                ? `dense cards-${getActiveCardValues(totalCardsOnTable).length}`
+                : ""
+            }`}
+          >
+            {generateBidOptions(selectedHandType, totalCardsOnTable).map(
+              (option) => {
+                const disabled = option.power <= gameState.currentBidPower;
+                const selected = pendingBid?.label === option.label;
+
+                return (
+                  <button
+                    key={option.label}
+                    className={[
+                      "bidOptionChip",
+                      disabled ? "disabled" : "",
+                      selected ? "selected" : "",
+                    ].join(" ")}
+                    disabled={disabled}
+                    onClick={() => chooseOnlineBid(option, selectedHandType.name)}
+                  >
+                    {option.label}
+                  </button>
+                );
+              }
+            )}
+          </div>
+        </>
+      )}
+
+      <div className="bidSelectedBox">
+        <span>Wybrano:</span>
+        <strong>{pendingBid?.label || "brak"}</strong>
+      </div>
+
+      <div className="bidFooter">
+        <button
+          className="bidBackBtn"
+          onClick={() => {
+            setSelectedHandType(null);
+            setShowBidModal(false);
+          }}
+        >
+          Wróć
+        </button>
+
+        <button
+          className="bidConfirmBtn"
+          disabled={!pendingBid}
+          onClick={handleOnlineBid}
+        >
+          Zatwierdź
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
 {showFullHistory && (
   <div className="historyModalOverlay">
